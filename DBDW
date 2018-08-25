@@ -1,0 +1,365 @@
+CREATE DATABASE IF NOT EXISTS `DBDW` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `DBDW`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `activos fijos`
+--
+
+CREATE TABLE `activos fijos` (
+  `idactivos fijos` int(11) NOT NULL,
+  `descripcion` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL,
+  `TIPOS DE ACTIVOS_idTIPOS DE ACTIVOS` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado`
+--
+
+CREATE TABLE `empleado` (
+  `idempleado` int(11) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `direccion` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `puesto` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `perfiles_idperfiles` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empresa`
+--
+
+CREATE TABLE `empresa` (
+  `activos fijos_idactivos fijos` int(11) NOT NULL,
+  `Producto_idProducto` int(11) NOT NULL,
+  `empleado_idempleado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `evolucion`
+--
+
+CREATE TABLE `evolucion` (
+  `idevolucion` int(11) NOT NULL,
+  `producto` varchar(45) DEFAULT NULL,
+  `ventasaldia` varchar(45) DEFAULT NULL,
+  `fechadecreacion` varchar(45) DEFAULT NULL,
+  `fechadevencimiento` varchar(45) DEFAULT NULL,
+  `nuevos productos_idnuevos productos` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `marketing`
+--
+
+CREATE TABLE `marketing` (
+  `idmarketing` int(11) NOT NULL,
+  `publicidad` varchar(45) DEFAULT NULL,
+  `objetivo` varchar(45) DEFAULT NULL,
+  `distribuicion` varchar(45) DEFAULT NULL,
+  `nuevos productos_idnuevos productos` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `nuevos productos`
+--
+
+CREATE TABLE `nuevos productos` (
+  `idnuevos productos` varchar(5) NOT NULL,
+  `nombrepro` varchar(45) DEFAULT NULL,
+  `tipopro` varchar(45) DEFAULT NULL,
+  `descripcionpro` varchar(45) DEFAULT NULL,
+  `preciocom` varchar(45) DEFAULT NULL,
+  `precioven` varchar(45) DEFAULT NULL,
+  `marcaprod` varchar(45) DEFAULT NULL,
+  `Producto_idProducto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `perfiles`
+--
+
+CREATE TABLE `perfiles` (
+  `idperfiles` int(11) NOT NULL,
+  `tipo de perfil` varchar(45) DEFAULT NULL,
+  `activos` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `producto`
+--
+
+CREATE TABLE `producto` (
+  `idProducto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+CREATE TABLE `roles` (
+  `idroles` int(11) NOT NULL,
+  `Usuario_idUsuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo de producto`
+--
+
+CREATE TABLE `tipo de producto` (
+  `idtipo de producto` int(11) NOT NULL,
+  `Estandar` varchar(45) DEFAULT NULL,
+  `servicio` varchar(45) DEFAULT NULL,
+  `kit` varchar(45) DEFAULT NULL,
+  `Producto_idProducto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipos de activos`
+--
+
+CREATE TABLE `tipos de activos` (
+  `idTIPOS DE ACTIVOS` int(11) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `tipo` varchar(45) DEFAULT NULL,
+  `descripcion` varchar(45) DEFAULT NULL,
+  `Estado` varchar(45) DEFAULT NULL,
+  `marca` varchar(45) DEFAULT NULL,
+  `tamaño` varchar(45) DEFAULT NULL,
+  `valores_idvalores` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `idUsuario` int(11) NOT NULL,
+  `Nombre` varchar(45) DEFAULT NULL,
+  `Clave` varchar(45) DEFAULT NULL,
+  `empleado_idempleado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `valores`
+--
+
+CREATE TABLE `valores` (
+  `idvalores` int(11) NOT NULL,
+  `apreciacion` varchar(45) DEFAULT NULL,
+  `depreciacion` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `activos fijos`
+--
+ALTER TABLE `activos fijos`
+  ADD PRIMARY KEY (`idactivos fijos`),
+  ADD KEY `fk_activos fijos_TIPOS DE ACTIVOS1_idx` (`TIPOS DE ACTIVOS_idTIPOS DE ACTIVOS`);
+
+--
+-- Indices de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD PRIMARY KEY (`idempleado`),
+  ADD KEY `fk_empleado_perfiles1_idx` (`perfiles_idperfiles`);
+
+--
+-- Indices de la tabla `empresa`
+--
+ALTER TABLE `empresa`
+  ADD KEY `fk_empresa_activos fijos1_idx` (`activos fijos_idactivos fijos`),
+  ADD KEY `fk_empresa_Producto1_idx` (`Producto_idProducto`),
+  ADD KEY `fk_empresa_empleado1_idx` (`empleado_idempleado`);
+
+--
+-- Indices de la tabla `evolucion`
+--
+ALTER TABLE `evolucion`
+  ADD PRIMARY KEY (`idevolucion`),
+  ADD KEY `fk_evolucion_nuevos productos1_idx` (`nuevos productos_idnuevos productos`);
+
+--
+-- Indices de la tabla `marketing`
+--
+ALTER TABLE `marketing`
+  ADD PRIMARY KEY (`idmarketing`),
+  ADD KEY `fk_marketing_nuevos productos1_idx` (`nuevos productos_idnuevos productos`);
+
+--
+-- Indices de la tabla `nuevos productos`
+--
+ALTER TABLE `nuevos productos`
+  ADD PRIMARY KEY (`idnuevos productos`),
+  ADD KEY `fk_nuevos productos_Producto1_idx` (`Producto_idProducto`);
+
+--
+-- Indices de la tabla `perfiles`
+--
+ALTER TABLE `perfiles`
+  ADD PRIMARY KEY (`idperfiles`);
+
+--
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`idProducto`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`idroles`),
+  ADD KEY `fk_roles_Usuario_idx` (`Usuario_idUsuario`);
+
+--
+-- Indices de la tabla `tipo de producto`
+--
+ALTER TABLE `tipo de producto`
+  ADD PRIMARY KEY (`idtipo de producto`),
+  ADD KEY `fk_tipo de producto_Producto1_idx` (`Producto_idProducto`);
+
+--
+-- Indices de la tabla `tipos de activos`
+--
+ALTER TABLE `tipos de activos`
+  ADD PRIMARY KEY (`idTIPOS DE ACTIVOS`),
+  ADD KEY `fk_TIPOS DE ACTIVOS_valores1_idx` (`valores_idvalores`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`idUsuario`),
+  ADD KEY `fk_Usuario_empleado1_idx` (`empleado_idempleado`);
+
+--
+-- Indices de la tabla `valores`
+--
+ALTER TABLE `valores`
+  ADD PRIMARY KEY (`idvalores`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  MODIFY `idempleado` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `activos fijos`
+--
+ALTER TABLE `activos fijos`
+  ADD CONSTRAINT `fk_activos fijos_TIPOS DE ACTIVOS1` FOREIGN KEY (`TIPOS DE ACTIVOS_idTIPOS DE ACTIVOS`) REFERENCES `tipos de activos` (`idTIPOS DE ACTIVOS`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD CONSTRAINT `fk_empleado_perfiles1` FOREIGN KEY (`perfiles_idperfiles`) REFERENCES `perfiles` (`idperfiles`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `empresa`
+--
+ALTER TABLE `empresa`
+  ADD CONSTRAINT `fk_empresa_Producto1` FOREIGN KEY (`Producto_idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_empresa_activos fijos1` FOREIGN KEY (`activos fijos_idactivos fijos`) REFERENCES `activos fijos` (`idactivos fijos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_empresa_empleado1` FOREIGN KEY (`empleado_idempleado`) REFERENCES `empleado` (`idempleado`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `evolucion`
+--
+ALTER TABLE `evolucion`
+  ADD CONSTRAINT `fk_evolucion_nuevos productos1` FOREIGN KEY (`nuevos productos_idnuevos productos`) REFERENCES `nuevos productos` (`idnuevos productos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `marketing`
+--
+ALTER TABLE `marketing`
+  ADD CONSTRAINT `fk_marketing_nuevos productos1` FOREIGN KEY (`nuevos productos_idnuevos productos`) REFERENCES `nuevos productos` (`idnuevos productos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `nuevos productos`
+--
+ALTER TABLE `nuevos productos`
+  ADD CONSTRAINT `fk_nuevos productos_Producto1` FOREIGN KEY (`Producto_idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD CONSTRAINT `fk_roles_Usuario` FOREIGN KEY (`Usuario_idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tipo de producto`
+--
+ALTER TABLE `tipo de producto`
+  ADD CONSTRAINT `fk_tipo de producto_Producto1` FOREIGN KEY (`Producto_idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tipos de activos`
+--
+ALTER TABLE `tipos de activos`
+  ADD CONSTRAINT `fk_TIPOS DE ACTIVOS_valores1` FOREIGN KEY (`valores_idvalores`) REFERENCES `valores` (`idvalores`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `fk_Usuario_empleado1` FOREIGN KEY (`empleado_idempleado`) REFERENCES `empleado` (`idempleado`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Base de datos: `phpmyadmin`
+--
+CREATE DATABASE IF NOT EXISTS `phpmyadmin` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `phpmyadmin`;
+
+-- --------------------------------------------------------
+
+--
